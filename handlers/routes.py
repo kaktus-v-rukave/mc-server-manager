@@ -3,18 +3,24 @@ from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from os import getenv
 from dotenv import load_dotenv
+from functools import wraps
 
+router = Router()
 load_dotenv()
 
 
-def is_admin(uid):
-    admins_id = set(getenv('ADMINS_ID').split(';'))
-    return str(uid) in admins_id
+def admin_only(handler):
+    @wraps(handler)
+    async def wrapper(message: Message, *args, **kwargs):
+        admins_id = set(getenv('ADMINS_ID').split(';'))
+        owner_id = getenv('OWNER_ID')
+        uid = str(message.from_user.id)
 
+        if uid in admins_id or uid == owner_id:
+            return await handler(message, *args, **kwargs)
+        return await message.answer('В доступе отказано.')
 
-def is_owner(uid):
-    owner_id = getenv('OWNER_ID')
-    return str(uid) == owner_id
+    return wrapper
 
 def admin_panel():
     keyboard = ReplyKeyboardMarkup(
@@ -27,9 +33,6 @@ def admin_panel():
     return keyboard
 
 
-router = Router()
-
-
 @router.message(Command('start'))
 async def start(message: Message):
     await message.answer('Привет')
@@ -40,12 +43,11 @@ async def get_id(message: Message):
     await message.answer(str(message.from_user.id))
 
 
-@router.message(Command('mc_server_op'))
-async def mc_server_op(message: Message):
-    if is_admin(message.from_user.id):
-        await message.answer(
-            'Доступ разрешен.\nДобро пожаловать.',
-            reply_markup=admin_panel()
-        )
-    else:
-        await message.answer('В доступе отказано.')
+@router.message(Command('mc_console'))
+@admin_only
+async def mc_console(message: Message):
+    await message.answer(
+        '<b>Панель управления майнкрафт сервера</b>\nДоступ разрешен.',
+        parse_mode='HTML',
+        reply_markup=admin_panel()
+    )
