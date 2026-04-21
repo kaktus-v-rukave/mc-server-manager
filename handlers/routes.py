@@ -10,7 +10,7 @@ router = Router()
 
 load_dotenv()
 
-rcon = RconService('89.168.98.166', getenv('RCON_PASSWD'))
+rcon = RconService('172.0.0.1', getenv('RCON_PASSWD'))
 
 
 def admin_only(handler):
