@@ -68,4 +68,5 @@ async def stop_server(message: Message):
 @admin_only
 async def start_server(message: Message):
     await message.answer('Запуск...')
-    subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
+    subprocess.run(["screen", "-S", "mc", "-X", "quit"])
+    subprocess.run(["screen", "-dmS", "mc", "bash", "run.sh"])
