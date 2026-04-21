@@ -5,6 +5,7 @@ from os import getenv
 from dotenv import load_dotenv
 from functools import wraps
 from server_panel.rcon_service import RconService
+import subprocess
 
 router = Router()
 
@@ -61,3 +62,10 @@ async def mc_console(message: Message):
 async def stop_server(message: Message):
     await message.answer('Остановка...')
     rcon.stop_server()
+
+
+@router.message(F.text == 'Пуск')
+@admin_only
+async def start_server(message: Message):
+    await message.answer('Запуск...')
+    subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
