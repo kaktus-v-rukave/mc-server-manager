@@ -1,12 +1,16 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from os import getenv
 from dotenv import load_dotenv
 from functools import wraps
+from server_panel.rcon_service import RconService
 
 router = Router()
+
 load_dotenv()
+
+rcon = RconService('89.168.98.166', getenv('RCON_PASSWD'))
 
 
 def admin_only(handler):
@@ -25,8 +29,8 @@ def admin_only(handler):
 def admin_panel():
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text='Перезапустить')],
-            [KeyboardButton(text='Запустить'), KeyboardButton(text='Остановить')]
+            [KeyboardButton(text='Перезапуск')],
+            [KeyboardButton(text='Пуск'), KeyboardButton(text='Стоп')]
         ],
         resize_keyboard=True
     )
@@ -51,3 +55,9 @@ async def mc_console(message: Message):
         parse_mode='HTML',
         reply_markup=admin_panel()
     )
+
+@router.message(F.text == 'Стоп')
+@admin_only
+async def stop_server(message: Message):
+    await message.answer('Остановка...')
+    rcon.stop_server()
