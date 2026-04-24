@@ -39,6 +39,12 @@ def admin_panel():
     return keyboard
 
 
+@router.message(Command('start'))
+async def start(message: Message):
+    await message.answer(f'Приветствую, {message.from_user.first_name}.\n'
+                         'Выберите действие в появившемся меню.')
+
+
 @router.message(Command('id'))
 async def get_id(message: Message):
     await message.answer(f'Ваш ID: {str(message.from_user.id)}')
