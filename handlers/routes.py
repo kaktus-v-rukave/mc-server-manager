@@ -47,7 +47,7 @@ async def get_id(message: Message):
 @router.message(Command('menu'))
 @admin_only
 async def mc_console(message: Message):
-    await message.answer(reply_markup=admin_panel())
+    await message.answer('Выберите действие.', reply_markup=admin_panel())
 
 
 @router.message(F.text == 'Стоп')
