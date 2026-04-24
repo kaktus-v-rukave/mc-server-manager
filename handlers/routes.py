@@ -1,11 +1,12 @@
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import Message
 from os import getenv
 from dotenv import load_dotenv
 from functools import wraps
 from server_panel.rcon_service import RconService
 import subprocess
+from keyboards.reply_keyboards import server_menu, main_menu
 
 router = Router()
 
@@ -28,21 +29,13 @@ def admin_only(handler):
     return wrapper
 
 
-def admin_panel():
-    keyboard = ReplyKeyboardMarkup(
-        keyboard=[
-            [KeyboardButton(text='Перезапуск')],
-            [KeyboardButton(text='Пуск'), KeyboardButton(text='Стоп')]
-        ],
-        resize_keyboard=True
-    )
-    return keyboard
-
-
 @router.message(Command('start'))
 async def start(message: Message):
-    await message.answer(f'Приветствую, {message.from_user.first_name}.\n'
-                         'Выберите действие в появившемся меню.')
+    await message.answer(
+        f'Приветствую, {message.from_user.first_name}.\n'
+        'Выберите действие в появившемся меню.',
+        reply_markup=main_menu()
+    )
 
 
 @router.message(Command('id'))
@@ -53,7 +46,7 @@ async def get_id(message: Message):
 @router.message(Command('menu'))
 @admin_only
 async def mc_console(message: Message):
-    await message.answer('Выберите действие.', reply_markup=admin_panel())
+    await message.answer('Выберите действие.', reply_markup=server_menu())
 
 
 @router.message(F.text == 'Стоп')
