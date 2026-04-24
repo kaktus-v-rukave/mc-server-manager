@@ -11,7 +11,7 @@ router = Router()
 
 load_dotenv()
 
-rcon = RconService('172.17.0.1', getenv('RCON_PASSWD'))
+rcon = RconService('172.0.0.1', getenv('RCON_PASSWD'))
 
 
 def admin_only(handler):
@@ -27,6 +27,7 @@ def admin_only(handler):
 
     return wrapper
 
+
 def admin_panel():
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
@@ -38,24 +39,16 @@ def admin_panel():
     return keyboard
 
 
-@router.message(Command('start'))
-async def start(message: Message):
-    await message.answer('Привет')
-
-
 @router.message(Command('get_id'))
 async def get_id(message: Message):
     await message.answer(str(message.from_user.id))
 
 
-@router.message(Command('mc_console'))
+@router.message(Command('menu'))
 @admin_only
 async def mc_console(message: Message):
-    await message.answer(
-        '<b>Панель управления майнкрафт сервера</b>\nДоступ разрешен.',
-        parse_mode='HTML',
-        reply_markup=admin_panel()
-    )
+    await message.answer(reply_markup=admin_panel())
+
 
 @router.message(F.text == 'Стоп')
 @admin_only
