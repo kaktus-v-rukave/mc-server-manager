@@ -39,9 +39,9 @@ def admin_panel():
     return keyboard
 
 
-@router.message(Command('get_id'))
+@router.message(Command('id'))
 async def get_id(message: Message):
-    await message.answer(str(message.from_user.id))
+    await message.answer(f'Ваш ID: {str(message.from_user.id)}')
 
 
 @router.message(Command('menu'))
