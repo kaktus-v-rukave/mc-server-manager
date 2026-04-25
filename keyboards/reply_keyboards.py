@@ -9,6 +9,7 @@ def server_menu():
         ],
         resize_keyboard=True
     )
+
     return keyboard
 
 
@@ -19,5 +20,8 @@ def main_menu():
                 KeyboardButton(text='Мой ID'),
                 KeyboardButton(text='Управление сервером')
             ]
-        ]
+        ],
+            resize_keyboard=True
     )
+
+    return keyboard
