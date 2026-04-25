@@ -9,10 +9,9 @@ import subprocess
 from keyboards.reply_keyboards import server_menu, main_menu
 import asyncio
 
-router = Router()
 
 load_dotenv()
-
+router = Router()
 rcon = RconService('127.0.0.1', getenv('RCON_PASSWD'))
 
 
