@@ -7,6 +7,7 @@ from functools import wraps
 from server_panel.rcon_service import RconService
 import subprocess
 from keyboards.reply_keyboards import server_menu, main_menu
+import asyncio
 
 router = Router()
 
@@ -52,12 +53,14 @@ async def mc_console(message: Message):
 @router.message(F.text == 'Стоп')
 @admin_only
 async def stop_server(message: Message):
-    await message.answer('Остановка...')
+    await message.answer('<b>Сервер остановлен</b> 🛑', parse_mode='HTML')
     rcon.stop_server()
 
 
 @router.message(F.text == 'Пуск')
 @admin_only
 async def start_server(message: Message):
-    await message.answer('Запуск...')
+    sent = await message.answer('<b>Запускаю</b> 🚀', parse_mode='HTML')
     subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
+    await asyncio.sleep(8)
+    await sent.edit_text('<b>Сервер запущен</b>', parse_mode='HTML')
