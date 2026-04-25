@@ -31,12 +31,13 @@ def admin_only(handler):
 
 @router.message(Command('start'))
 async def start(message: Message):
-    if str(message.from_user.id) in getenv('OWNER_ID'):
+    if str(message.from_user.id) == getenv('OWNER_ID'):
         user_status = '[Owner]'
-    elif str(message.from_user.id) in getenv('ADMINS_ID'):
+    elif str(message.from_user.id) in getenv('ADMINS_ID').split(';'):
         user_status = '[Admin]'
     else:
         user_status = ''
+
     await message.answer(
         f'Приветствую, {message.from_user.first_name}{user_status}.\n'
         'Выберите действие в появившемся меню.',
