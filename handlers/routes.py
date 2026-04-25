@@ -47,7 +47,10 @@ async def start(message: Message):
 
 @router.message(F.text == 'Мой ID')
 async def get_id(message: Message):
-    await message.answer(f'Ваш ID: {str(message.from_user.id)}')
+    await message.answer(
+        f'Ваш ID: <code>{str(message.from_user.id)}</code>',
+        parse_mode='HTML'
+    )
 
 
 @router.message(F.text == 'Меню сервера')
