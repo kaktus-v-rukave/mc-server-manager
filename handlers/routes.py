@@ -68,5 +68,5 @@ async def stop_server(message: Message):
 async def start_server(message: Message):
     sent = await message.answer('<b>Запускаю</b> 🚀', parse_mode='HTML')
     subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
-    await asyncio.sleep(15)
+    await asyncio.sleep(34)
     await sent.edit_text('<b>Сервер запущен</b> ✅', parse_mode='HTML')
