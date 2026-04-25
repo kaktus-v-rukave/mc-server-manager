@@ -38,12 +38,12 @@ async def start(message: Message):
     )
 
 
-@router.message(Command('id'))
+@router.message(F.text == 'Мой ID')
 async def get_id(message: Message):
     await message.answer(f'Ваш ID: {str(message.from_user.id)}')
 
 
-@router.message(Command('menu'))
+@router.message(F.text == 'Меню сервера')
 @admin_only
 async def mc_console(message: Message):
     await message.answer('Выберите действие.', reply_markup=server_menu())

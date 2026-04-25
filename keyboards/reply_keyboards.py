@@ -18,7 +18,7 @@ def main_menu():
         keyboard=[
             [
                 KeyboardButton(text='Мой ID'),
-                KeyboardButton(text='Управление сервером')
+                KeyboardButton(text='Меню сервера')
             ]
         ],
             resize_keyboard=True
