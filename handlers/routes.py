@@ -39,7 +39,7 @@ async def start(message: Message):
         user_status = ''
 
     await message.answer(
-        f'Приветствую, {message.from_user.first_name}{user_status}.\n'
+        f'Приветствую, {message.from_user.first_name} {user_status}.\n'
         'Выберите действие в появившемся меню.',
         reply_markup=main_menu()
     )
