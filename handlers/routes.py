@@ -58,3 +58,13 @@ async def start_server(message: Message):
     subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
     await asyncio.sleep(34)
     await sent.edit_text('<b>Сервер запущен</b> ✅', parse_mode='HTML')
+
+
+@router.message(F.text == 'Перезапуск')
+@admin_only
+async def restart_server(message: Message):
+    sent = await message.answer('<b>Перезапускаю</b> 🔃', parse_mode='HTML')
+    rcon.stop_server()
+    subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
+    await asyncio.sleep(36)
+    await sent.edit_text('<b>Сервер перезапущен</b> ✅', parse_mode='HTML')

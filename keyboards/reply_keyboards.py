@@ -5,7 +5,8 @@ def server_menu():
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text='Перезапуск')],
-            [KeyboardButton(text='Пуск'), KeyboardButton(text='Стоп')]
+            [KeyboardButton(text='Пуск'), KeyboardButton(text='Стоп')],
+            [KeyboardButton(text='/start')]
         ],
         resize_keyboard=True
     )
