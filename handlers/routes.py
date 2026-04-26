@@ -7,7 +7,7 @@ from server_panel.rcon_service import RconService
 import subprocess
 from keyboards.reply_keyboards import server_menu, main_menu
 import asyncio
-
+from decorators.wraps import admin_only
 
 load_dotenv()
 router = Router()
