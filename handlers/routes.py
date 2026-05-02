@@ -54,8 +54,8 @@ async def stop_server(message: Message):
             '<b>Ошибка. ⚠️\nСервер выключен.</b>',
             parse_mode='HTML'
         )
-
-    await message.answer('<b>Сервер остановлен</b> 🛑', parse_mode='HTML')
+    else:
+        await message.answer('<b>Сервер остановлен</b> 🛑', parse_mode='HTML')
 
 
 @router.message(F.text == 'Пуск')
@@ -78,8 +78,8 @@ async def restart_server(message: Message):
             '<b>Ошибка. ⚠️\nСервер выключен.</b>',
             parse_mode='HTML'
         )
-
-    sent = await message.answer('<b>Перезапускаю</b> 🔃', parse_mode='HTML')
-    subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
-    await asyncio.sleep(36)
-    await sent.edit_text('<b>Сервер перезапущен</b> ✅', parse_mode='HTML')
+    else:
+        sent = await message.answer('<b>Перезапускаю</b> 🔃', parse_mode='HTML')
+        subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
+        await asyncio.sleep(36)
+        await sent.edit_text('<b>Сервер перезапущен</b> ✅', parse_mode='HTML')
