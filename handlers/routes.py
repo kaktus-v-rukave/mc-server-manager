@@ -62,6 +62,7 @@ async def stop_server(message: Message):
 @admin_only
 async def start_server(message: Message):
     sent = await message.answer('<b>Запускаю</b> 🚀', parse_mode='HTML')
+
     subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
     await asyncio.sleep(34)
     await sent.edit_text('<b>Сервер запущен</b> ✅', parse_mode='HTML')
@@ -71,6 +72,7 @@ async def start_server(message: Message):
 @admin_only
 async def restart_server(message: Message):
     sent = await message.answer('<b>Перезапускаю</b> 🔃', parse_mode='HTML')
+
     try:
         rcon.stop_server()
     except ConnectionRefusedError:
@@ -78,6 +80,7 @@ async def restart_server(message: Message):
             '<b>Ошибка. ⚠️\nСервер выключен.</b>',
             parse_mode='HTML'
         )
+
     subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
     await asyncio.sleep(36)
     await sent.edit_text('<b>Сервер перезапущен</b> ✅', parse_mode='HTML')
