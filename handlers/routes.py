@@ -71,16 +71,15 @@ async def start_server(message: Message):
 @router.message(F.text == 'Перезапуск')
 @admin_only
 async def restart_server(message: Message):
-    sent = await message.answer('<b>Перезапускаю</b> 🔃', parse_mode='HTML')
-
     try:
         rcon.stop_server()
     except ConnectionRefusedError:
-        await sent.edit_text(
+        await message.answer(
             '<b>Ошибка. ⚠️\nСервер выключен.</b>',
             parse_mode='HTML'
         )
 
+    sent = await message.answer('<b>Перезапускаю</b> 🔃', parse_mode='HTML')
     subprocess.run(["screen", "-S", "mc", "-X", "stuff", "./run.sh\n"])
     await asyncio.sleep(36)
     await sent.edit_text('<b>Сервер перезапущен</b> ✅', parse_mode='HTML')
