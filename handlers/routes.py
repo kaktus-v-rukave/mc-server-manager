@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.filters import Command
+from aiogram.filters import Command, or_f
 from aiogram.types import Message
 from os import getenv
 from dotenv import load_dotenv
@@ -14,7 +14,7 @@ router = Router()
 rcon = RconService('127.0.0.1', getenv('RCON_PASSWD'))
 
 
-@router.message(Command('start'))
+@router.message(or_f(Command('start'), F.text == 'Назад'))
 async def start(message: Message):
     if str(message.from_user.id) == getenv('OWNER_ID'):
         user_status = '[Owner]'

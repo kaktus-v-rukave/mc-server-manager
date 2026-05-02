@@ -6,7 +6,7 @@ def server_menu():
         keyboard=[
             [KeyboardButton(text='Перезапуск')],
             [KeyboardButton(text='Пуск'), KeyboardButton(text='Стоп')],
-            [KeyboardButton(text='/start')]
+            [KeyboardButton(text='Назад')]
         ],
         resize_keyboard=True
     )
